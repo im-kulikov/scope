@@ -67,3 +67,12 @@ var commonKeys = map[string]string{
 	"snooped_dns_names": "snooped_dns_names",
 	"threads":           "threads",
 }
+
+// lookupCommonKey tris to avoid an allocation in populating the key
+// by looking it up
+func lookupCommonKey(key *string, b []byte) {
+	var ok bool
+	if *key, ok = commonKeys[string(b)]; !ok {
+		*key = string(b)
+	}
+}
